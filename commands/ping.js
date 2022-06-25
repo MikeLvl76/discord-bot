@@ -10,10 +10,12 @@ module.exports = {
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
-        await interaction.reply('feur');
+        await interaction.reply('Yes ?');
 
         const message = await interaction.fetchReply();
-        console.log(`Received in ${message.createdTimestamp - interaction.createdTimestamp} ms.\nPing = ${interaction.client.ws.ping} ms.`);
+        console.log(`User ${interaction.user.username} :`);
+        console.log(`\tReceived in ${message.createdTimestamp - interaction.createdTimestamp} ms`)
+        console.log(`\tPing = ${interaction.client.ws.ping} ms`);
 
         return interaction;
     }

@@ -14,7 +14,7 @@ for(const file of files){
 }
 
 client.once('ready', () => {
-   console.log("Hi");
+   console.log("Bot ready !");
 });
 
 client.on('interactionCreate', async interaction => {
