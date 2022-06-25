@@ -1,6 +1,6 @@
 # Purpose 
 
-Experiment discord module from Node.js and see its features. Creating your own bot allows you to choose whatever you want for options and can be a huge help for managing servers with large amount of people. It is simple to add for your server with [Discord Developper Portal](https://discord.com/developers/applications) that provides advices for bot installation.
+Experiment discord module from Node.js and see its features. Creating your own bot allows you to choose whatever you want for options and can be a huge help for managing servers with large amount of people. It is simple to add to your server with [Discord Developper Portal](https://discord.com/developers/applications) that provides advices for bot installation.
 
 # Current version
 
