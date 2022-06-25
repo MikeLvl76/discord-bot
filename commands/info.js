@@ -4,7 +4,7 @@ const { CommandInteraction } = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('info')
-        .setDescription('Get info about a user or a server!')
+        .setDescription('Get info about a user or a server !')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('user')
@@ -33,9 +33,10 @@ module.exports = {
                     "id" : user.id,
                     "tag" : user.tag,
                     "username" : user.username,
-                    "Joined at" : user.createdAt,
+                    "role" : user.role,
+                    "joined at" : user.createdAt,
                 }
-                await interaction.reply(`Info about ${user.username} : \n${JSON.stringify(dict, Object.keys(dict), 4)}`);
+                await interaction.reply(`Info about ${user.username} : \n${JSON.stringify(dict, Object.keys(dict), '\t')}`);
                 break;
 
             case 'server':
@@ -47,8 +48,8 @@ module.exports = {
                 const infos = {
                     "id" : server.id,
                     "name" : server.name,
-                    "Created at " : server.createdAt,
-                    "Total members" : server.memberCount,
+                    "created at " : server.createdAt,
+                    "total members" : server.memberCount,
                     "Owner" : server.ownerId
                 }
                 await interaction.reply(`Info about server ${server.name} : \n${JSON.stringify(infos, Object.keys(infos), '\t')}`);
