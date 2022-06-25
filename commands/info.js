@@ -47,9 +47,11 @@ module.exports = {
                 const infos = {
                     "id" : server.id,
                     "name" : server.name,
-                    "Created at " : server.createdAt
+                    "Created at " : server.createdAt,
+                    "Total members" : server.memberCount,
+                    "Owner" : server.ownerId
                 }
-                await interaction.reply(`Info about server ${server.name} : \n${JSON.stringify(infos, Object.keys(infos), 4)}`);
+                await interaction.reply(`Info about server ${server.name} : \n${JSON.stringify(infos, Object.keys(infos), '\t')}`);
                 break;
 
             default:
