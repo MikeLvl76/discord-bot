@@ -1,8 +1,8 @@
 const fs = require('fs');
 const {Client, Collection, Intents} = require('discord.js');
-const client = new Client({ intents : [Intents.FLAGS.GUILDS]});
+const client = new Client({ intents : [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
 
-const {token} = require('./config.json');
+const {token, answers} = require('./config.json');
 const handleCommand = require('./handles/command');
 client.commands = new Collection();
 
@@ -19,6 +19,12 @@ client.once('ready', () => {
 
 client.on('interactionCreate', async interaction => {
     if (interaction.isCommand()) handleCommand(client, interaction);
+});
+
+client.on("messageCreate", async message => {
+    if(message.content.includes("quoi")){
+        message.channel.send(`<@${message.author.id}> ${answers[Math.floor(Math.random()*answers.length)]}`);
+    }
 });
 
 client.login(token);
