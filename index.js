@@ -1,9 +1,24 @@
-const {Client, Intents} = require('discord.js');
+const fs = require('fs');
+const {Client, Collection, Intents} = require('discord.js');
 const client = new Client({ intents : [Intents.FLAGS.GUILDS]});
-const json = require('./config.json');
+
+const {token} = require('./config.json');
+const handleCommand = require('./handles/command');
+client.commands = new Collection();
+
+const files = fs.readdirSync('./commands').filter(f => f.endsWith('.js'));
+
+for(const file of files){
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.data.name, command);
+}
 
 client.once('ready', () => {
    console.log("Hi");
 });
 
-client.login(json['token']);
+client.on('interactionCreate', async interaction => {
+    if (interaction.isCommand()) handleCommand(client, interaction);
+});
+
+client.login(token);
