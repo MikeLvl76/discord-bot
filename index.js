@@ -1,11 +1,12 @@
 const fs = require('fs');
 const cron = require('cron');
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection, Intents, Permissions } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 const { token, answers, channelId, todo} = require('./config.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
+
 client.commands = new Collection();
 
 const files = fs.readdirSync('./commands').filter(f => f.endsWith('.js'));
