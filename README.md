@@ -11,3 +11,11 @@ Few commmands created :
 - info : 
     - use `/info server` to see info from the server where the bot is
     - use `/info user` + username to see info for the choosen user
+- gif : use `/gif` + word for bot replying with a gif relying to the given word
+
+
+Few interactions :
+- "quoi" : the bot will answer with "feur" (french joke : quoi and feur together sounds like "coiffeur")
+- "oui" : the bot will answer with "stiti" (also french joke)
+- Each minute the bot will post a message
+- One time per day the bot will post a message
