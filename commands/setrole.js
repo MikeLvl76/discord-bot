@@ -26,7 +26,10 @@ module.exports = {
         const cmd = interaction.options.getSubcommand();
         const role = interaction.options.getString('input');
         const found = interaction.guild.roles.cache.find(r => r.name === role);
-        
+        if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
+            await interaction.reply("You have not the permission to do this action !");
+            throw new Error("permission denied");
+        }
         if(found === undefined){
             await interaction.reply(`No role named ${role}`);
             throw new Error("role must be defined");
@@ -48,7 +51,7 @@ module.exports = {
                 if(target.roles.cache.some(r => r.name === role)){
                     target.roles.remove(found);
                     await interaction.reply(`Role "${role}" removed from user ${user.username}`);
-                    console.log(`${interaction.user.username} deleted a role`);
+                    console.log(`${interaction.user.username} removed a role`);
                     break;
                 }
                 await interaction.reply(`User ${user.username} doesn't have the role`);

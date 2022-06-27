@@ -24,6 +24,10 @@ module.exports = {
         const cmd = interaction.options.getSubcommand();
         const role = interaction.options.getString('input');
         const found = interaction.guild.roles.cache.find(r => r.name === role);
+        if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
+            await interaction.reply("You have not the permission to do this action !");
+            throw new Error("permission denied");
+        }
         switch (cmd) {
             case 'create':
                 if (found === undefined) {
