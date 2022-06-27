@@ -29,28 +29,35 @@ module.exports = {
         
         if(found === undefined){
             await interaction.reply(`No role named ${role}`);
+            throw new Error("role must be defined");
         }
         const user = interaction.options.getUser('target');
         if(!user){
             await interaction.reply('Sorry, unavailable user');
+            throw new Error("user must be defined");
         }
         const target = interaction.guild.members.cache.get(user.id);
         switch (cmd) {
             case 'set':
                 target.roles.add(found);
                 await interaction.reply(`Role "${role}" set for user ${user.username}`);
+                console.log(`${interaction.user.username} set a role`);
                 break;
 
             case 'remove':
-                target.roles.remove(found);
-                await interaction.reply(`Role "${role}" remove from user ${user.username}`);
+                if(target.roles.cache.some(r => r.name === role)){
+                    target.roles.remove(found);
+                    await interaction.reply(`Role "${role}" removed from user ${user.username}`);
+                    console.log(`${interaction.user.username} deleted a role`);
+                    break;
+                }
+                await interaction.reply(`User ${user.username} doesn't have the role`);
                 break;
-        
+
             default:
                 break;
         }
 
-        console.log(`${interaction.user.username} set or deleted a role`);
-        console.log(`${user.username} has been affected by this changement`);
+        console.log(`${user.username} has been affected by this change`);
     }
 }
