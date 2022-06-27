@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction } = require('discord.js');
+const { CommandInteraction, Permissions } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,21 +20,21 @@ module.exports = {
         const user = interaction.options.getUser('target');
         const role = interaction.options.getString('input');
         const target = interaction.guild.members.cache.get(user.id);
-        await target.guild.roles.create({
-            data: {
-              name: role,
-              color: '#ff0000',
-              permissions: {
-                  SEND_MESSAGES: true,
-                  ADD_REACTIONS: true,
-                  SPEAK: true
-              }
-            },
-            reason: 'test',
-          })
-        interaction.guild.members.cache.forEach(r => console.log(r));
-        /*console.log(target.roles);
-        target.roles.add(newRole);*/
+        const found = interaction.guild.roles.cache.find(r => r.name === role);
+        if(found === undefined){
+            await interaction.guild.roles.create({
+                data: {
+                  permissions: [Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.ADD_REACTIONS, Permissions.FLAGS.SPEAK]
+                }
+            }).then(r => {
+                r.setName(role);
+                r.setColor('RANDOM');
+                target.roles.add(r);
+            });
+        } else {
+            interaction.guild.members.cache.forEach(r => console.log(r.user.username));
+            target.roles.add(found);
+        }
         await interaction.reply(`Role "${role}" added to ${user.username} !`);
     }
 }
