@@ -17,8 +17,13 @@ module.exports = {
                 .addStringOption(option => option.setName('input').setDescription('Name of the role to delete')))
         .addSubcommand(subcommand =>
             subcommand
+                .setName('list')
+                .setDescription('View all roles in the server'))
+        .addSubcommand(subcommand =>
+            subcommand
                 .setName('view')
-                .setDescription('View all roles in the server')),
+                .setDescription('View info of role')
+                .addStringOption(option => option.setName('input').setDescription('Name of the role to view'))),
 
     /**
      * 
@@ -34,6 +39,10 @@ module.exports = {
         }
         switch (cmd) {
             case 'create':
+                if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
+                    await interaction.reply("You have not the permission to do this action !");
+                    throw new Error("permission denied");
+                }
                 if (found === undefined) {
                     await interaction.guild.roles.create({
                         data: {
@@ -51,6 +60,10 @@ module.exports = {
                 break;
 
             case 'delete':
+                if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
+                    await interaction.reply("You have not the permission to do this action !");
+                    throw new Error("permission denied");
+                }
                 if (found === undefined) {
                     await interaction.reply(`Role "${role}" already deleted or never been created !`);
                 } else {
@@ -60,15 +73,24 @@ module.exports = {
                 }
                 break;
 
-            case 'view':
+            case 'list':
                 let names = []
                 interaction.guild.roles.cache.forEach(r => {
-                    if(r.name !== '@everyone') names.push(r.name)
+                    if (r.name !== '@everyone') names.push(r.name)
                 });
                 const format = names.join('\n');
                 await interaction.reply(`Roles in the server :\n${format}`);
                 console.log(`${interaction.user.username} listed all roles`);
                 break;
+
+            case 'view':
+                if (found === undefined) {
+                    await interaction.reply(`Role "${role}" deleted or never been created !`);
+                } else {
+                    const permissions = found.permissions.toArray().join('\n');
+                    await interaction.reply(`Permissions for role "${role} :\n${permissions}`);
+                    console.log(`${interaction.user.username} has viewed role "${role}"`);
+                }
 
             default:
                 break;

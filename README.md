@@ -17,7 +17,7 @@ Here is a list of available commands :
 - **role**
     - use `/role create` to create a new role (only member with Administrator role can use it)
     - use `/role delete` to delete existing role (only member with Administrator role can use it)
-    - use `/role view`   to list all roles in the server execept `@everyone`
+    - use `/role view`   to list all roles in the server except `@everyone`
 - **setrole**
     - use `/setrole set` to set a role for user (only member with Administrator role can use it)
     - use `/setrole remove` to remove a role from user (only member with Administrator role can use it)
