@@ -14,7 +14,11 @@ module.exports = {
             subcommand
                 .setName('delete')
                 .setDescription('Delete a role')
-                .addStringOption(option => option.setName('input').setDescription('Name of the role to delete'))),
+                .addStringOption(option => option.setName('input').setDescription('Name of the role to delete')))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('view')
+                .setDescription('View all roles in the server')),
 
     /**
      * 
@@ -24,7 +28,7 @@ module.exports = {
         const cmd = interaction.options.getSubcommand();
         const role = interaction.options.getString('input');
         const found = interaction.guild.roles.cache.find(r => r.name === role);
-        if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
+        if (!interaction.member.roles.cache.some(r => r.name === 'Master')) {
             await interaction.reply("You have not the permission to do this action !");
             throw new Error("permission denied");
         }
@@ -54,6 +58,16 @@ module.exports = {
                     await interaction.reply(`Role "${role}" deleted !`);
                     console.log(`${interaction.user.username} deleted role "${role}"`);
                 }
+                break;
+
+            case 'view':
+                let names = []
+                interaction.guild.roles.cache.forEach(r => {
+                    if(r.name !== '@everyone') names.push(r.name)
+                });
+                const format = names.join('\n');
+                await interaction.reply(`Roles in the server :\n${format}`);
+                console.log(`${interaction.user.username} listed all roles`);
                 break;
 
             default:
