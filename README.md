@@ -31,4 +31,4 @@ Few interactions :
 - "quoi" : the bot will answer with "feur" (french joke : quoi and feur together sounds like "coiffeur")
 - "oui" : the bot will answer with "stiti" (also french joke)
 - Each minute the bot will post a message
-- One time per day the bot will post a message
+- Once per day the bot will post a message
