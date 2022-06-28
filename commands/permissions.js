@@ -19,13 +19,22 @@ module.exports = {
             subcommand
                 .setName('add')
                 .setDescription('Add permission(s) for role')
-                .addStringOption(option => option.setName('input').setDescription('Role to give permission(s)'))),
+                .addStringOption(option => option.setName('input').setDescription('Role to give permission(s)')))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('remove')
+                .setDescription('Remove permission(s) for role')
+                .addStringOption(option => option.setName('input').setDescription('Role to remove permission(s)'))),
 
     /**
      * 
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
+        if (!interaction.member.roles.cache.some(r => r.name === 'Master')) {
+            await interaction.reply("You have not the permission to do this action !");
+            throw new Error("permission denied");
+        }
         const rows = new MessageActionRow()
             .addComponents(new MessageSelectMenu()
                 .setCustomId('select-permissions')
@@ -38,15 +47,30 @@ module.exports = {
         switch (interaction.customId) {
             case 'select-permissions':
                 const string = interaction.options.getString('input');
+                const cmd = interaction.options.getSubcommand();
                 const role = interaction.guild.roles.cache.find(r => r.name === string);
-                for(let permission of interaction.values){
-                    role.setPermissions(permission);
-                    console.log(`Permissions changed for role ${role.name}`);
+                switch (cmd) {
+                    case 'add':
+                        for (let permission of interaction.values) {
+                            role.permissions.add(permission);
+                            console.log(`Permissions changed for role ${role.name}`);
+                        }
+                        break;
+
+                    case 'remove':
+                        for (let permission of interaction.values) {
+                            role.permissions.remove(permission);
+                            console.log(`Permissions removed for role ${role.name}`);
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
-                
-                await interaction.update({content: `You have chosen ${interaction.values.lenght} permission(s)`, components: []});
+
+                await interaction.update({ content: `You have chosen ${interaction.values.lenght} permission(s)`, components: [] });
                 break;
-        
+
             default:
                 break;
         }

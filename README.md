@@ -24,6 +24,7 @@ Here is a list of available commands :
     - use `/setrole remove` to remove a role from user (only member with Administrator role can use it)
 - **permission**
     - use `/permission add` to add permission(s) to a role, the role is given by an input and the permission(s) by choice list
+    - use `/permission remove` to remove permission(s) to a role, the role is given by an input and the permission(s) by choice list
 
 
 Few interactions :
