@@ -6,7 +6,7 @@ Experiment discord module from Node.js and see its features. Creating your own b
 
 There are few possible interactions with the bot like slash commands or sending special messages.
 
-Here is a table a slash commands available :
+Here is a table of slash commands available :
 |**Name**|**Description**|
 |--|--|
 |ping|makes the bot answer to it|
