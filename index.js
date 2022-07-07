@@ -6,7 +6,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { token, answers, channelId, todo} = require('./config.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
-const wiki = require('./messages/command');
+const {wiki, weather} = require('./messages/command');
 
 client.commands = new Collection();
 
@@ -19,13 +19,13 @@ for (const file of files) {
 
 client.once('ready', () => {
     console.log("Ready to interact !");
-    const check = 1000 * 60;
+    const check = 1000 * 300; // in ms
     setInterval(() => {
         client.channels.fetch(channelId[0])
             .then(channel => channel.send(todo[Math.floor(Math.random()*todo.length)]));
         console.log(`[${client.user.username}] at [${new Date().toLocaleString()}] send a message`);
     }, check);
-    const scheduledMessage = new cron.CronJob('00 26 11 * * *', () => {
+    const scheduledMessage = new cron.CronJob('00 00 21 * * *', () => {
         client.channels.fetch(channelId[0])
             .then(channel => channel.send(`I'M HERE`));
     });
@@ -40,6 +40,7 @@ client.on('interactionCreate', async interaction => {
 client.on('messageCreate', message => {
     answerBack(message, answers);
     wiki(message);
+    weather(message);
 });
 
 client.login(token);
