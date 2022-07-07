@@ -4,7 +4,7 @@ Experiment discord module from Node.js and see its features. Creating your own b
 
 # Features
 
-There are few possible interactions with the bot like slash commands or sending special messages.
+There are few possible interactions with the bot like commands or sending special messages.
 
 Here is a table of slash commands available :
 |**Name**|**Description**|
@@ -14,6 +14,13 @@ Here is a table of slash commands available :
 |role|use `create` to create a new role (only member with Administrator role can use it)<br>use `delete` to delete existing role (only member with Administrator role can use it)<br>use `view` to view all permissions of a role, an input is required for its name<br>use `list` to list all roles in the server except `@everyone`|
 |setrole|use `set` to set a role for user (only member with Administrator role can use it)<br>use `remove` to remove a role from user (only member with Administrator role can use it)|
 |permision|use `add` to add permission(s) to a role, the role is given by an input and the permission(s) by choice list<br>use `remove` to remove permission(s) to a role, the role is given by an input and the permission(s) by choice list|
+
+It's possible to "create" special commands by user sending message with a special character followed by command name.</br>
+Here is a table of special commands using character `$` :
+|**Name**|**Description**|
+|--|--|
+|wiki|give a language and term to enable bot creating Wikipedia link|
+|weather|give a city name to see its temperature felt (don't worry about spaces)|
 
 And below a table with special interaction/behaviour of the bot :
 |**Message**|**Interaction**|
