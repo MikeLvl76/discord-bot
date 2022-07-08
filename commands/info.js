@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction } = require('discord.js');
+const { CommandInteraction, MessageEmbed } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,44 +25,65 @@ module.exports = {
         switch (cmd) {
             case 'user':
                 const user = interaction.options.getUser('target');
-                if(!user){
+                if (!user) {
                     await interaction.reply('Sorry, unavailable user');
                     break;
                 }
-                const dict = {
-                    "id" : user.id,
-                    "tag" : user.tag,
-                    "username" : user.username,
-                    "role" : user.role,
-                    "joined at" : user.createdAt,
-                }
-                await interaction.reply(`Info about ${user.username} : \n${JSON.stringify(dict, Object.keys(dict), '\t')}`);
+                const fetchUser = interaction.guild.members.cache.get(user.id);
+                const roles = fetchUser.roles.valueOf();
+                const joined = fetchUser.joinedAt;
+                const embed = new MessageEmbed()
+                    .setColor('#0099ff')
+                    .setTitle(`User ${user.username}`)
+                    .setURL(`https://discordapp.com/users/${user.id}/`)
+                    .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
+                    .setDescription('Details of user here.')
+                    .setThumbnail('https://i.imgur.com/MtxXPqa.png')
+                    .addFields([
+                        { name: 'id', value: user.id },
+                        { name: 'tag', value: user.tag, inline: true },
+                        { name: 'username', value: user.username, inline: true },
+                        { name: 'role(s)', value: roles.map(r => `${r}`).join(' | '), inline: true },
+                        { name: 'joined at', value: joined.toLocaleString(), inline: true },
+                    ])
+                    .setImage(user.displayAvatarURL())
+                    .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });
+                await interaction.reply({ embeds: [embed] });
                 break;
 
             case 'server':
                 const server = interaction.guild;
-                if(!server){
+                if (!server) {
                     await interaction.reply('Sorry, a problem has occured with server');
                     break;
                 }
                 const infos = {
-                    "id" : server.id,
-                    "name" : server.name,
-                    "created at " : server.createdAt,
-                    "total members" : server.memberCount,
-                    "Owner" : server.ownerId
+                    "id": server.id,
+                    "name": server.name,
+                    "created at ": server.createdAt,
+                    "total members": server.memberCount,
+                    "Owner": server.ownerId
                 }
-                await interaction.reply(`Info about server ${server.name} : \n${JSON.stringify(infos, Object.keys(infos), '\t')}`);
+                const guild = new MessageEmbed()
+                    .setColor('#0099ff')
+                    .setTitle(`Server ${server.name}`)
+                    .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
+                    .setDescription('Details of server here.')
+                    .setThumbnail('https://i.imgur.com/MtxXPqa.png')
+                    .addFields([
+                        { name: 'id', value: server.id },
+                        { name: 'name', value: server.name, inline: true },
+                        { name: 'created at', value: server.createdAt.toLocaleString(), inline: true },
+                        { name: 'number of members', value: server.memberCount.toString(), inline: true },
+                        { name: 'owner', value: server.ownerId, inline: true },
+                    ])
+                    .setImage(server.iconURL)
+                    .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });
+                await interaction.reply({ embeds: [guild] });
                 break;
 
             default:
                 break;
         }
-
-
-        const message = await interaction.fetchReply();
-        console.log(`To user ${interaction.user.username} :`);
-        console.log(`\t- Received in ${message.createdTimestamp - interaction.createdTimestamp} ms`)
-        console.log(`\t- Ping : ${interaction.client.ws.ping} ms`);
     }
 }
