@@ -20,8 +20,8 @@ Here is a table of special commands using character `$` :
 |**Name**|**Description**|
 |--|--|
 |wiki|give a language and term to enable bot creating Wikipedia link|
-|weather|give a city name to see its temperature felt (spaces are managed)|
-|translate|give a language as entry and another as destination and your message to see it translated (spaces are managed)|
+|weather|give a city name to see its temperature felt (space characters are managed)|
+|translate|give a language as entry and another as destination and your message to see it translated (space characters are managed)|
 |commandlist|give a list of all commands except itself|
 
 And below a table with special interaction/behaviour of the bot :
