@@ -2,47 +2,20 @@ const puppeteer = require('puppeteer');
 const translate = require('@vitalets/google-translate-api');
 
 COMMANDS = ['$wiki', '$weather', '$translate', '$commandlist']
-LANG = ['fr', 'en', 'de', 'it', 'es', 'pt']
 
 function special_commands(message) {
     if (!message.author.bot) {
         if (message.content.startsWith(COMMANDS[0])) {
             const parts = message.content.split(' ');
-            let url = '';
-            switch (parts[1]) {
-
-                case 'info':
-                    message.channel.send(`Use $wiki for a Wikipedia link\nFormat must be "$wiki [lang] [message]".\nLanguages available : ${LANG}`);
-                    break;
-
-                case 'fr':
-                    url = `https://fr.wikipedia.org/wiki/${parts[2]}`;
-                    break;
-
-                case 'en':
-                    url = `https://en.wikipedia.org/wiki/${parts[2]}`;
-                    break;
-
-                case 'de':
-                    url = `https://de.wikipedia.org/wiki/${parts[2]}`;
-                    break;
-
-                case 'it':
-                    url = `https://it.wikipedia.org/wiki/${parts[2]}`;
-                    break;
-
-                case 'es':
-                    url = `https://es.wikipedia.org/wiki/${parts[2]}`;
-                    break;
-
-                case 'pt':
-                    url = `https://pt.wikipedia.org/wiki/${parts[2]}`;
-                    break;
-
-                default:
-                    break;
+            if(parts.length > 3){
+                parts[2] = parts.slice(2, parts.length).join("-");
             }
-            message.reply(url !== '' ? url : 'Nothing to send anymore.');
+            if(parts[1] === 'info'){
+                message.channel.send(`Use $wiki for a Wikipedia link\nFormat must be "$wiki [lang] [message]".\n`);
+            } else {
+                message.reply(`https://${parts[1]}.wikipedia.org/wiki/${parts[2]}`);
+            }
+            
         }
         else if (message.content.startsWith(COMMANDS[1])) {
             const i = message.content.indexOf(' ');
