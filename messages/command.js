@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
+const translate = require('@vitalets/google-translate-api');
 
-COMMANDS = ['$wiki', '$weather']
+COMMANDS = ['$wiki', '$weather', '$translate']
 LANG = ['fr', 'en', 'de', 'it', 'es', 'pt']
 
 function special_commands(message) {
@@ -64,15 +65,27 @@ function special_commands(message) {
                     )
                 );
                 let format = [];
-                for(let i = 0; i < 6; i++){
+                for (let i = 0; i < 6; i++) {
                     format.push(temperatures[i] + '°C');
                 }
                 message.channel.send(
                     `Felt temperature of ${parts[1]} today : ${format[0]}.\nFelt temperature for next 5 days : ${format.slice(1, 6)}`
                 );
             });
-        } else {
-            message.channel.send("Unknown command, please retry.");
+        }
+        else if (message.content.startsWith(COMMANDS[2])) {
+            const parts = message.content.split(' ');
+            if (parts[1] === 'info') {
+                message.channel.send("Use $translate for a translation from given language to another.Format must be $translate [origin] [dest] [message].\n");
+            }
+            if(parts.length > 4){
+                parts[3] = parts.slice(3, parts.length).join(" ");
+            }
+            translate(parts[3], { from: parts[1], to: parts[2] }).then(res => {
+                message.reply(`${res.text}`);
+            }).catch(err => {
+                console.error(err);
+            });
         }
     }
 }
