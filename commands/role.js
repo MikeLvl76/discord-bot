@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, Permissions } = require('discord.js');
+const { CommandInteraction, Permissions, MessageEmbed } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -70,12 +70,16 @@ module.exports = {
                 break;
 
             case 'list':
-                let names = []
-                interaction.guild.roles.cache.forEach(r => {
-                    if (r.name !== '@everyone') names.push(r.name)
-                });
-                const format = names.join('\n');
-                await interaction.reply(`Roles in the server :\n${format}`);
+                const embed = new MessageEmbed()
+                    .setColor('#0099ff')
+                    .setTitle(`Server ${interaction.guild.name}`)
+                    .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
+                    .setDescription('List of all roles of this server.')
+                    .setThumbnail('https://i.imgur.com/MtxXPqa.png')
+                    .addField('role(s)', interaction.guild.roles.cache.map(r => `${r}`).join(' | '), false)
+                    .setImage(interaction.guild.iconURL())
+                    .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });
+                await interaction.reply({ embeds: [embed] });
                 console.log(`${interaction.user.username} listed all roles`);
                 break;
 

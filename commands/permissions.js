@@ -68,7 +68,7 @@ module.exports = {
                         break;
                 }
 
-                await interaction.update({ content: `You have chosen ${interaction.values.lenght} permission(s)`, components: [] });
+                await interaction.update({ content: `You have chosen ${interaction.values.length} permission(s)`, components: [] });
                 break;
 
             default:

@@ -30,6 +30,7 @@ module.exports = {
             collect[user.username] = {
                 '1': reason
             };
+            index = 1;
             data['list'].push(collect);
         } else {
             for (let elt of data['list']) {

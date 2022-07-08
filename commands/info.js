@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { CommandInteraction, MessageEmbed } = require('discord.js');
+const { list } = require('./warnings.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -32,6 +33,12 @@ module.exports = {
                 const fetchUser = interaction.guild.members.cache.get(user.id);
                 const roles = fetchUser.roles.valueOf();
                 const joined = fetchUser.joinedAt;
+                let warningCount = 0;
+                for (let elt of list) {
+                    if (elt[user.username] !== undefined) {
+                        warningCount = Object.keys(elt[user.username]).length;
+                    }
+                }
                 const embed = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(`User ${user.username}`)
@@ -43,6 +50,7 @@ module.exports = {
                         { name: 'id', value: user.id },
                         { name: 'tag', value: user.tag, inline: true },
                         { name: 'username', value: user.username, inline: true },
+                        { name: 'warnings', value: warningCount.toString(), inline: true },
                         { name: 'role(s)', value: roles.map(r => `${r}`).join(' | '), inline: true },
                         { name: 'joined at', value: joined.toLocaleString(), inline: true },
                     ])
@@ -57,13 +65,6 @@ module.exports = {
                     await interaction.reply('Sorry, a problem has occured with server');
                     break;
                 }
-                const infos = {
-                    "id": server.id,
-                    "name": server.name,
-                    "created at ": server.createdAt,
-                    "total members": server.memberCount,
-                    "Owner": server.ownerId
-                }
                 const guild = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(`Server ${server.name}`)
@@ -75,9 +76,10 @@ module.exports = {
                         { name: 'name', value: server.name, inline: true },
                         { name: 'created at', value: server.createdAt.toLocaleString(), inline: true },
                         { name: 'number of members', value: server.memberCount.toString(), inline: true },
+                        { name: 'emojis', value: server.emojis.cache.map(e => `${e}`).join(' | '), inline: true },
                         { name: 'owner', value: server.ownerId, inline: true },
                     ])
-                    .setImage(server.iconURL)
+                    .setImage(server.iconURL())
                     .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });
                 await interaction.reply({ embeds: [guild] });
                 break;
