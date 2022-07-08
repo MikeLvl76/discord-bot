@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const translate = require('@vitalets/google-translate-api');
 
-COMMANDS = ['$wiki', '$weather', '$translate']
+COMMANDS = ['$wiki', '$weather', '$translate', '$commandlist']
 LANG = ['fr', 'en', 'de', 'it', 'es', 'pt']
 
 function special_commands(message) {
@@ -42,7 +42,7 @@ function special_commands(message) {
                 default:
                     break;
             }
-            message.channel.send(url !== '' ? url : 'Nothing to send anymore.');
+            message.reply(url !== '' ? url : 'Nothing to send anymore.');
         }
         else if (message.content.startsWith(COMMANDS[1])) {
             const i = message.content.indexOf(' ');
@@ -68,7 +68,7 @@ function special_commands(message) {
                 for (let i = 0; i < 6; i++) {
                     format.push(temperatures[i] + '°C');
                 }
-                message.channel.send(
+                message.reply(
                     `Felt temperature of ${parts[1]} today : ${format[0]}.\nFelt temperature for next 5 days : ${format.slice(1, 6)}`
                 );
             });
@@ -86,6 +86,12 @@ function special_commands(message) {
             }).catch(err => {
                 console.error(err);
             });
+        } else if (message.content.startsWith(COMMANDS[3])) {
+            const desc = `There are ${COMMANDS.length - 1} command(s) available :\n`;
+            const cmd1 = `\t- use ${COMMANDS[0]} for a Wikipedia link.\n`
+            const cmd2 = `\t- use ${COMMANDS[1]} to see the temperature felt in your city.\n`
+            const cmd3 = `\t- use ${COMMANDS[2]} for a translation.\n`
+            message.reply(desc + cmd1 + cmd2 + cmd3);
         }
     }
 }
