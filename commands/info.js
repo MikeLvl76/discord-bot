@@ -33,6 +33,7 @@ module.exports = {
                 const fetchUser = interaction.guild.members.cache.get(user.id);
                 const roles = fetchUser.roles.valueOf();
                 const joined = fetchUser.joinedAt;
+                const nickname = fetchUser.nickname;
                 let warningCount = 0;
                 for (let elt of list) {
                     if (elt[user.username] !== undefined) {
@@ -40,8 +41,8 @@ module.exports = {
                     }
                 }
                 const embed = new MessageEmbed()
-                    .setColor('#0099ff')
-                    .setTitle(`User ${user.username}`)
+                    .setColor(user.hexAccentColor)
+                    .setTitle(`User ${nickname || user.username}`)
                     .setURL(`https://discordapp.com/users/${user.id}/`)
                     .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
                     .setDescription('Details of user here.')
@@ -50,6 +51,7 @@ module.exports = {
                         { name: 'id', value: user.id },
                         { name: 'tag', value: user.tag, inline: true },
                         { name: 'username', value: user.username, inline: true },
+                        { name: 'nickname', value: nickname || '.', inline: true },
                         { name: 'warnings', value: warningCount.toString(), inline: true },
                         { name: 'role(s)', value: roles.map(r => `${r}`).join(' | '), inline: true },
                         { name: 'joined at', value: joined.toLocaleString(), inline: true },
