@@ -31,4 +31,4 @@ And below a table with special interaction/behaviour of the bot :
 |"quoi"|the bot will answer with "feur" (french joke : quoi and feur together sounds like "coiffeur")|
 |"oui"|the bot will answer with "stiti" (also french joke)|
 |&#x274C;|Each minute the bot will post a message|
-|&#x274C;|Once per day the bot will post a message|
+|&#x274C;|Once a day the bot will post a message|
