@@ -6,7 +6,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const { token, answers, channelId, todo} = require('./config.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
-const {wiki, weather} = require('./messages/command');
+const special_commands = require('./messages/command');
 
 client.commands = new Collection();
 
@@ -39,8 +39,7 @@ client.on('interactionCreate', async interaction => {
 
 client.on('messageCreate', message => {
     answerBack(message, answers);
-    wiki(message);
-    weather(message);
+    special_commands(message);
 });
 
 client.login(token);

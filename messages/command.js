@@ -1,32 +1,41 @@
 const puppeteer = require('puppeteer');
 
-SPECIAL_COMMANDS = ['$wiki', '$weather']
-LANG = ['fr', 'en', 'de', 'it']
+COMMANDS = ['$wiki', '$weather']
+LANG = ['fr', 'en', 'de', 'it', 'es', 'pt']
 
-function wiki(message) {
+function special_commands(message) {
     if (!message.author.bot) {
-        if (message.content.startsWith(SPECIAL_COMMANDS[0])) {
+        if (message.content.startsWith(COMMANDS[0])) {
             const parts = message.content.split(' ');
-            const url = '';
+            let url = '';
             switch (parts[1]) {
+
                 case 'info':
                     message.channel.send(`Use $wiki for a Wikipedia link\nFormat must be "$wiki [lang] [message]".\nLanguages available : ${LANG}`);
                     break;
 
                 case 'fr':
-                    url = "https://fr.wikipedia.org/wiki/" + parts[2];
+                    url = `https://fr.wikipedia.org/wiki/${parts[2]}`;
                     break;
 
                 case 'en':
-                    url = "https://en.wikipedia.org/wiki/" + parts[2];
+                    url = `https://en.wikipedia.org/wiki/${parts[2]}`;
                     break;
 
                 case 'de':
-                    url = "https://de.wikipedia.org/wiki/" + parts[2];
+                    url = `https://de.wikipedia.org/wiki/${parts[2]}`;
                     break;
 
                 case 'it':
-                    url = "https://it.wikipedia.org/wiki/" + parts[2];
+                    url = `https://it.wikipedia.org/wiki/${parts[2]}`;
+                    break;
+
+                case 'es':
+                    url = `https://es.wikipedia.org/wiki/${parts[2]}`;
+                    break;
+
+                case 'pt':
+                    url = `https://pt.wikipedia.org/wiki/${parts[2]}`;
                     break;
 
                 default:
@@ -34,13 +43,8 @@ function wiki(message) {
             }
             message.channel.send(url !== '' ? url : 'Nothing to send anymore.');
         }
-    }
-}
-
-function weather(message) {
-    if (!message.author.bot) {
-        if (message.content.startsWith(SPECIAL_COMMANDS[1])) {
-            let i = message.content.indexOf(' ');
+        else if (message.content.startsWith(COMMANDS[1])) {
+            const i = message.content.indexOf(' ');
             let parts = [message.content.slice(0, i), message.content.slice(i + 1)]; // split only once by space character
             if (parts[1] === 'info') {
                 message.channel.send("Use $weather to see what's forecasted for your city.\nFormat must be $weather [city].\n");
@@ -59,7 +63,13 @@ function weather(message) {
                         elt => elt.textContent
                     )
                 );
-                message.channel.send(`Felt temperature of ${parts[1]} today : ${temperatures[0]}°C.\nFelt temperature for next 3 days : ${temperatures.slice(1, 4)}`);
+                let format = [];
+                for(let i = 0; i < 6; i++){
+                    format.push(temperatures[i] + '°C');
+                }
+                message.channel.send(
+                    `Felt temperature of ${parts[1]} today : ${format[0]}.\nFelt temperature for next 5 days : ${format.slice(1, 6)}`
+                );
             });
         } else {
             message.channel.send("Unknown command, please retry.");
@@ -67,4 +77,4 @@ function weather(message) {
     }
 }
 
-module.exports = {wiki, weather};
+module.exports = special_commands;
