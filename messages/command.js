@@ -33,17 +33,17 @@ function special_commands(message) {
                 }
                 const embed = new MessageEmbed()
                     .setColor(`#0099ff`)
-                    .setTitle(`Weather in ${current['observationpoint']}`)
+                    .setTitle(`Weather in ${current['observationpoint'] || ':x:'}`)
                     .setThumbnail('https://cdn-icons-png.flaticon.com/512/3127/3127236.png')
                     .addFields([
-                        { name: ':white_sun_rain_cloud: sky', value: `${current['skytext']}`, inline: true },
-                        { name: ':thermometer: temperature', value: `${current['temperature']}°C`, inline: true },
-                        { name: ':person_shrugging: feels', value: `${current['feelslike']}°C`, inline: true },
-                        { name: ':droplet: humidity', value: `${current['humidity']}%`, inline: true },
-                        { name: ':wind_blowing_face: wind speed', value: `${current['windspeed']}`, inline: true },
-                        { name: ':clock1: time', value: `${current['observationtime']}`, inline: true },
+                        { name: ':white_sun_rain_cloud: sky', value: `${current['skytext'] || ':x:'}`, inline: true },
+                        { name: ':thermometer: temperature', value: `${current['temperature' || ':x:']}°C`, inline: true },
+                        { name: ':person_shrugging: feels', value: `${current['feelslike'] || ':x:'}°C`, inline: true },
+                        { name: ':droplet: humidity', value: `${current['humidity'] || ':x:'}%`, inline: true },
+                        { name: ':wind_blowing_face: wind speed', value: `${current['windspeed'] || ':x:'}`, inline: true },
+                        { name: ':clock1: time', value: `${current['observationtime'] || ':x:'}`, inline: true },
                     ])
-                    .setFooter({ text: `At ${current['date']}, ${current['day']}` });
+                    .setFooter({ text: `At ${current['date']}, ${current['day']}` || ':x:'});
                 message.reply({ embeds: [embed] });
             });
         }
