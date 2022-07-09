@@ -61,11 +61,17 @@ function special_commands(message) {
                 console.error(err);
             });
         } else if (message.content.startsWith(COMMANDS[3])) {
-            const desc = `There are ${COMMANDS.length - 1} command(s) available :\n`;
-            const cmd1 = `\t- use ${COMMANDS[0]} for a Wikipedia link.\n`
-            const cmd2 = `\t- use ${COMMANDS[1]} to see the temperature felt in your city.\n`
-            const cmd3 = `\t- use ${COMMANDS[2]} for a translation.\n`
-            message.reply(desc + cmd1 + cmd2 + cmd3);
+            const embed = new MessageEmbed()
+                    .setColor(`#0099ff`)
+                    .setTitle(`Commands with prefix $`)
+                    .setThumbnail('https://cdn-icons-png.flaticon.com/512/138/138849.png')
+                    .addFields([
+                        { name: ':link: wiki', value: '\u200b', inline: true},
+                        { name: ':white_sun_rain_cloud: weather', value: '\u200b', inline: true},
+                        { name: ':speech_left: translate', value: '\u200b', inline: true},
+                    ])
+                    .setFooter({ text: new Date().toLocaleString()});
+                message.reply({ embeds: [embed] });
         }
     }
 }
