@@ -56,7 +56,15 @@ function special_commands(message) {
                 parts[3] = parts.slice(3, parts.length).join(" ");
             }
             translate(parts[3], { from: parts[1], to: parts[2] }).then(res => {
-                message.reply(`${res.text}`);
+                const embed = new MessageEmbed()
+                    .setColor(`#0099ff`)
+                    .setTitle(`Translation`)
+                    .addFields([
+                        { name: `${parts[1]}`, value: `${parts[3]}`, inline: false},
+                        { name: `${parts[2]}`, value: `${res.text}`, inline: false},
+                    ])
+                    .setFooter({ text: new Date().toLocaleString()});
+                message.reply({ embeds: [embed] });
             }).catch(err => {
                 console.error(err);
             });

@@ -7,5 +7,6 @@
         "quoi" : "put an array of string values here",
         "oui" : "put an array of string values here"
     },
-    "todo" : "put an array of string values here"
+    "todo" : "put an array of string values here",
+    "greetings" : "put an array of string values here"
 }

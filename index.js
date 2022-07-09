@@ -1,9 +1,9 @@
 const fs = require('fs');
 const cron = require('cron');
-const { Client, Collection, Intents, Permissions } = require('discord.js');
+const { Client, Collection, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-const { token, answers, channelId, todo} = require('./config.json');
+const { token, answers, channelId, todo, greetings} = require('./config.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
 const special_commands = require('./messages/command');
@@ -18,16 +18,16 @@ for (const file of files) {
 }
 
 client.once('ready', () => {
-    console.log("Ready to interact !");
+    const current = client.channels.fetch(channelId[0]);
+    current.then(channel => channel.send(greetings[Math.floor(Math.random()*greetings.length)]))
+    console.log("The bot has logged in !");
     const check = 1000 * 300; // in ms
     setInterval(() => {
-        client.channels.fetch(channelId[0])
-            .then(channel => channel.send(todo[Math.floor(Math.random()*todo.length)]));
+        current.then(channel => channel.send(todo[Math.floor(Math.random()*todo.length)]));
         console.log(`[${client.user.username}] at [${new Date().toLocaleString()}] send a message`);
     }, check);
     const scheduledMessage = new cron.CronJob('00 00 21 * * *', () => {
-        client.channels.fetch(channelId[0])
-            .then(channel => channel.send(`I'M HERE`));
+        current.then(channel => channel.send(`I'M HERE`));
     });
 
     scheduledMessage.start()
