@@ -32,7 +32,7 @@ module.exports = {
      */
     async execute(interaction) {
         if (!interaction.member.roles.cache.some(r => r.name === 'Master')) {
-            await interaction.reply("You have not the permission to do this action !");
+            await interaction.reply("You don't have the permission to do this action !");
             throw new Error("permission denied");
         }
         const rows = new MessageActionRow()

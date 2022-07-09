@@ -41,7 +41,7 @@ function special_commands(message) {
                         { name: ':person_shrugging: feels', value: `${current['feelslike'] || ':x:'}°C`, inline: true },
                         { name: ':droplet: humidity', value: `${current['humidity'] || ':x:'}%`, inline: true },
                         { name: ':wind_blowing_face: wind speed', value: `${current['windspeed'] || ':x:'}`, inline: true },
-                        { name: ':clock1: time', value: `${current['observationtime'] || ':x:'}`, inline: true },
+                        { name: ':clock1: observation time', value: `${current['observationtime'] || ':x:'}`, inline: true },
                     ])
                     .setFooter({ text: `At ${current['date']}, ${current['day']}` || ':x:'});
                 message.reply({ embeds: [embed] });
