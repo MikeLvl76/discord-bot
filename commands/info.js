@@ -42,19 +42,19 @@ module.exports = {
                 }
                 const embed = new MessageEmbed()
                     .setColor(user.hexAccentColor)
-                    .setTitle(`User ${nickname || user.username}`)
+                    .setTitle(`:bust_in_silhouette: ${nickname || user.username}`)
                     .setURL(`https://discordapp.com/users/${user.id}/`)
                     .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
                     .setDescription('Details of user here.')
                     .setThumbnail('https://i.imgur.com/MtxXPqa.png')
                     .addFields([
-                        { name: 'id', value: user.id },
-                        { name: 'tag', value: user.tag, inline: true },
-                        { name: 'username', value: user.username, inline: true },
-                        { name: 'nickname', value: nickname || '.', inline: true },
-                        { name: 'warnings', value: warningCount.toString(), inline: true },
-                        { name: 'role(s)', value: roles.map(r => `${r}`).join(' | '), inline: true },
-                        { name: 'joined at', value: joined.toLocaleString(), inline: true },
+                        { name: ':id:', value: user.id },
+                        { name: ':eyes: tag', value: user.tag, inline: true },
+                        { name: ':abc: username', value: user.username, inline: true },
+                        { name: ':spy: nickname', value: nickname || '.', inline: true },
+                        { name: ':warning: warnings', value: warningCount.toString(), inline: true },
+                        { name: ':passport_control: role(s)', value: roles.map(r => `${r}`).join(' | '), inline: true },
+                        { name: ':clock1: joined at', value: joined.toLocaleString(), inline: true },
                     ])
                     .setImage(user.displayAvatarURL())
                     .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });
@@ -69,17 +69,17 @@ module.exports = {
                 }
                 const guild = new MessageEmbed()
                     .setColor('#0099ff')
-                    .setTitle(`Server ${server.name}`)
+                    .setTitle(`:sparkles: ${server.name} :sparkles:`)
                     .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
                     .setDescription('Details of server here.')
                     .setThumbnail('https://i.imgur.com/MtxXPqa.png')
                     .addFields([
-                        { name: 'id', value: server.id },
-                        { name: 'name', value: server.name, inline: true },
-                        { name: 'created at', value: server.createdAt.toLocaleString(), inline: true },
-                        { name: 'number of members', value: server.memberCount.toString(), inline: true },
-                        { name: 'emojis', value: server.emojis.cache.map(e => `${e}`).join(' | '), inline: true },
-                        { name: 'owner', value: server.ownerId, inline: true },
+                        { name: ':id:', value: server.id },
+                        { name: ':abc: name', value: server.name, inline: true },
+                        { name: ':clock1: created at', value: server.createdAt.toLocaleString(), inline: true },
+                        { name: ':1234: number of members', value: server.memberCount.toString(), inline: true },
+                        { name: ':grinning: emojis', value: server.emojis.cache.map(e => `${e}`).join(' | ') || '.', inline: true },
+                        { name: ':bust_in_silhouette: owner', value: server.ownerId, inline: true },
                     ])
                     .setImage(server.iconURL())
                     .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });

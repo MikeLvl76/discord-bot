@@ -38,6 +38,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 client.on('messageCreate', message => {
+    if (message.mentions.has(client.user)) console.log('test')
     answerBack(message, answers);
     special_commands(message);
 });
