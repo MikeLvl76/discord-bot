@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const translate = require('@vitalets/google-translate-api');
+const weather = require('weather-js');
+const { MessageEmbed } = require('discord.js');
 
 COMMANDS = ['$wiki', '$weather', '$translate', '$commandlist']
 
@@ -22,28 +24,27 @@ function special_commands(message) {
             let parts = [message.content.slice(0, i), message.content.slice(i + 1)]; // split only once by space character
             if (parts[1] === 'info') {
                 message.channel.send("Use $weather to see what's forecasted for your city.\nFormat must be $weather [city].\n");
-            } else {
-                while (parts[1].includes(' ')) {
-                    parts[1] = parts[1].replace(' ', '-');
-                }
             }
-            const url = `https://fr.weather-forecast.com/locations/${parts[1]}/forecasts/latest`;
-            puppeteer.launch().then(async browser => {
-                const page = await browser.newPage()
-                await page.goto(url)
-                const temperatures = await page.evaluate(
-                    () => Array.from(
-                        document.querySelectorAll('td[class="b-forecast__table-cell-chill b-forecast__table-day-end"]'),
-                        elt => elt.textContent
-                    )
-                );
-                let format = [];
-                for (let i = 0; i < 6; i++) {
-                    format.push(temperatures[i] + '°C');
+            weather.find({search: parts[1], degreeType: 'C'}, function(err, json) {
+                if(err) console.log(err);
+                let current = undefined;
+                for(let elt of json){
+                    if(elt['current'] !== undefined) current = elt['current']
                 }
-                message.reply(
-                    `Felt temperature of ${parts[1]} today : ${format[0]}.\nFelt temperature for next 5 days : ${format.slice(1, 6)}`
-                );
+                const embed = new MessageEmbed()
+                    .setColor(`#0099ff`)
+                    .setTitle(`Weather in ${current['observationpoint']}`)
+                    .setThumbnail('https://cdn-icons-png.flaticon.com/512/3127/3127236.png')
+                    .addFields([
+                        { name: ':white_sun_rain_cloud: sky', value: `${current['skytext']}`, inline: true },
+                        { name: ':thermometer: temperature', value: `${current['temperature']}°C`, inline: true },
+                        { name: ':person_shrugging: feels', value: `${current['feelslike']}°C`, inline: true },
+                        { name: ':droplet: humidity', value: `${current['humidity']}%`, inline: true },
+                        { name: ':wind_blowing_face: wind speed', value: `${current['windspeed']}`, inline: true },
+                        { name: ':clock1: time', value: `${current['observationtime']}`, inline: true },
+                    ])
+                    .setFooter({ text: `At ${current['date']}, ${current['day']}` });
+                message.reply({ embeds: [embed] });
             });
         }
         else if (message.content.startsWith(COMMANDS[2])) {
