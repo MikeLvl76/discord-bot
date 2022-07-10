@@ -3,3 +3,4 @@
 
 # private files
 config.json
+commands/*.json
