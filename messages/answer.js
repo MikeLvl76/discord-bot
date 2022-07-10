@@ -25,6 +25,7 @@ async function answerBack(message, data, client){
                         { name: ':speech_left: $translate', value: 'Translate message from language to another', inline: true},
                     ])
                     .setFooter({ text: new Date().toLocaleString()});
+            message.react('💯');
             message.author.send({ embeds: [embed] });
         }
     }

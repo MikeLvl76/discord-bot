@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { CommandInteraction, MessageEmbed } = require('discord.js');
 const { list } = require('./warnings.json');
+const data = require('./identification.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -34,6 +35,13 @@ module.exports = {
                 const roles = fetchUser.roles.valueOf();
                 const joined = fetchUser.joinedAt;
                 const nickname = fetchUser.nickname;
+                let firstname = ':x:';
+                let lastname = ':x:';
+                const info = Object.keys(data).find(k => k === user.username);
+                if (info != undefined) {
+                    firstname = data[info][0];
+                    lastname = data[info][1];
+                }
                 let warningCount = 0;
                 for (let elt of list) {
                     if (elt[user.username] !== undefined) {
@@ -51,7 +59,9 @@ module.exports = {
                         { name: ':id:', value: user.id },
                         { name: ':eyes: tag', value: user.tag, inline: true },
                         { name: ':abc: username', value: user.username, inline: true },
-                        { name: ':spy: nickname', value: nickname || '.', inline: true },
+                        { name: ':abc: firstname', value: firstname, inline: true },
+                        { name: ':abc: lastname', value: lastname, inline: true },
+                        { name: ':spy: nickname', value: nickname || ':x:', inline: true },
                         { name: ':warning: warnings', value: warningCount.toString(), inline: true },
                         { name: ':passport_control: role(s)', value: roles.map(r => `${r}`).join(' | '), inline: true },
                         { name: ':clock1: joined at', value: joined.toLocaleString(), inline: true },
