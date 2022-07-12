@@ -20,7 +20,7 @@ for (const file of files) {
 client.once('ready', () => {
     client.user.setActivity({ type: "PLAYING", name: `Backrooms` });
     const current = client.channels.fetch(channelId[0]);
-    current.then(channel => channel.send(greetings[Math.floor(Math.random()*greetings.length)]))
+    current.then(channel => channel.send(`It's ${new Date().toLocaleString()} and the BOAT is here.`))
     console.log("The bot has logged in !");
     const check = 1000 * 300; // in ms
     setInterval(() => {
@@ -28,7 +28,7 @@ client.once('ready', () => {
         console.log(`[${client.user.username}] at [${new Date().toLocaleString()}] send a message`);
     }, check);
     const scheduledMessage = new cron.CronJob('00 00 21 * * *', () => {
-        current.then(channel => channel.send(`I'M HERE`));
+        current.then(channel => channel.send(`Wanna help ?`));
     });
 
     scheduledMessage.start()

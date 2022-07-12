@@ -6,28 +6,26 @@ let array = [];
 for (let i = 0; i < Object.keys(AUTHORIZATION).length; i++) {
     array[i] = {
         name: Object.keys(AUTHORIZATION)[i],
-        value: Object.values(AUTHORIZATION)[i].replace('"', '')
+        value: Object.keys(AUTHORIZATION)[i].toUpperCase()
     }
 }
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('permission')
-        .setDescription('Set permission(s) for role')
+        .setName('channel')
+        .setDescription('add or remove channel')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('add')
-                .setDescription('Add permission(s) for role')
-                .addStringOption(option => option.setName('name').setDescription('Role to give permission(s)'))
+                .setDescription('Add channel')
+                .addStringOption(option => option.setName('name').setDescription('Channel\'s name'))
                 .addStringOption(option => option.setName('permission').setDescription('Permission for channel')
                     .addChoices(...array)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('remove')
-                .setDescription('Remove permission(s) for role')
-                .addStringOption(option => option.setName('name').setDescription('Role to remove permission(s)'))
-                .addStringOption(option => option.setName('permission').setDescription('Permission for channel')
-                    .addChoices(...array))),
+                .setDescription('Remove channel')
+                .addStringOption(option => option.setName('name').setDescription('Channel\'s name'))),
 
     /**
      * 
@@ -39,21 +37,29 @@ module.exports = {
             throw new Error("permission denied");
         }
 
-        const string = command.options.getString('name');
-        const cmd = command.options.getSubcommand();
-        const role = command.guild.roles.cache.find(r => r.name === string);
-        const choice = interaction.options.getString('permission')
 
-        switch (cmd) {
+        const name = interaction.options.getString('name');
+        const choice = interaction.options.getString('permission')
+        const subcmd = interaction.options.getSubcommand();
+
+        switch (subcmd) {
             case 'add':
-                role.permissions.add(choice);
-                console.log(`Permission added for role ${role.name}`);
+
+                interaction.guild.channels.create(name, {
+                    type: 'GUILD_TEXT',
+                    permissionOverwrites: [{
+                        id: interaction.guild.id,
+                        allow: [choice]
+                    }]
+                })
+                console.log(`Channel ${name} created !`);
                 const embed = new MessageEmbed()
                     .setColor('#0099ff')
-                    .setTitle(`:white_check_mark: Permission added for role ${role.name}`)
+                    .setTitle(`:white_check_mark: Channel ${name}`)
                     .addFields([
-                        { name: `:abc: name`, value: choice, inline: true },
-                        { name: `:bust_in_silhouette: added by`, value: interaction.user.username, inline: true }
+                        { name: ':question: type', value: 'text', inline: true },
+                        { name: `:abc: name`, value: name, inline: true },
+                        { name: `:bust_in_silhouette: created by`, value: interaction.user.username, inline: true }
                     ])
                     .setImage(interaction.guild.iconURL())
                     .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });;
@@ -62,16 +68,16 @@ module.exports = {
                 break;
 
             case 'remove':
-                for (let permission of interaction.values) {
-                    role.permissions.remove(permission);
-                    console.log(`Permissions removed for role ${role.name}`);
-                }
+                const channel = interaction.guild.channels.cache.find(c => c.name === name);
+                channel.delete();
+                console.log(`Channel ${name} deleted !`);
                 const embed2 = new MessageEmbed()
                     .setColor('#0099ff')
-                    .setTitle(`:x: Permission removed for role ${role.name}`)
+                    .setTitle(`:x: Channel ${name}`)
                     .addFields([
-                        { name: `:abc: name`, value: choice, inline: true },
-                        { name: `:bust_in_silhouette: removed by`, value: interaction.user.username, inline: true }
+                        { name: ':question: type', value: 'text', inline: true },
+                        { name: `:abc: name`, value: name, inline: true },
+                        { name: `:bust_in_silhouette: deleted by`, value: interaction.user.username, inline: true }
                     ])
                     .setImage(interaction.guild.iconURL())
                     .setFooter({ text: new Date().toLocaleString(), iconURL: interaction.user.displayAvatarURL() });;
