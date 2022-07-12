@@ -17,6 +17,7 @@ Here is a table of slash commands available :
 |permision|use `add` to add permission(s) to a role, the role is given by an input and the permission(s) by choice list<br>use `remove` to remove permission(s) to a role, the role is given by an input and the permission(s) by choice list|
 |warn|use `user` and `reason` to warn an user, the warning (count and reason) and the user's name will be saved in JSON file, for the time the outcome is not decided which results as an infinite warning as long as possible. You can add or view warning(s).|
 |channel|use `add` then `name` and `permission` to create a channel with one permission among a list.</br>use `remove` then `name` to remove an existing channel|
+|quotelist|use `user` to list all his quotes|
 
 It's possible to "create" special commands by user sending message with a special character followed by command name.</br>
 Here is a table of special commands using character `$` :
