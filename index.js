@@ -1,9 +1,12 @@
 const fs = require('fs');
 const cron = require('cron');
 const { Client, Collection, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
+    partials: ['MESSAGE', 'CHANNEL', 'REACTION']
+});
 
-const { token, answers, channelId, todo } = require('./config.json');
+const { token, answers, channelId, todo, quote } = require('./config.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
 const special_commands = require('./messages/command');
@@ -43,6 +46,55 @@ client.on('interactionCreate', async interaction => {
 client.on('messageCreate', message => {
     answerBack(message, answers, client);
     special_commands(message);
+});
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    // When a reaction is received, check if the structure is partial
+    if (reaction.partial) {
+        // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
+        try {
+            await reaction.fetch();
+        } catch (error) {
+            console.error('Something went wrong when fetching the message:', error);
+            // Return as `reaction.message.author` may be undefined/null
+            return;
+        }
+    }
+
+    if (reaction.emoji.name === quote) {
+
+        const reader = fs.readFileSync('./quote.json');
+        const data = JSON.parse(reader);
+        const name = user.username;
+        const content = reaction.message.content;
+
+        if (data['list'].length === 0) {
+            const collect = {};
+            collect[reaction.message.author.username] = {};
+            collect[reaction.message.author.username][`quoted by ${name}`] = [content];
+            data['list'].push(collect);
+        } else {
+            for (let elt of data['list']) {
+                if (elt[reaction.message.author.username] === undefined) {
+                    elt[reaction.message.author.username] = {};
+                    elt[reaction.message.author.username][`quoted by ${name}`] = [content];
+                    break;
+                } else {
+                    elt[reaction.message.author.username][`quoted by ${name}`].push(content);
+                    break;
+                }
+            }
+        }
+        fs.writeFile('./quote.json', JSON.stringify(data, null, 4), err => {
+            if (err) throw err;
+            console.log(`${name} has quoted ${reaction.message.author.username}'s message !`);
+        });
+    }
+
+    // Now the message has been cached and is fully available
+    console.log(`${reaction.message.author.username}'s message "${reaction.message.content}" gained a reaction!`);
+    // The reaction is now also fully available and the properties will be reflected accurately:
+    console.log(`${reaction.count} user(s) have given the same reaction to this message!`);
 });
 
 client.login(token);
