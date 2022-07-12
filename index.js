@@ -1,6 +1,6 @@
 const fs = require('fs');
 const cron = require('cron');
-const { Client, Collection, Intents } = require('discord.js');
+const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
@@ -89,6 +89,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
             if (err) throw err;
             console.log(`${name} has quoted ${reaction.message.author.username}'s message !`);
         });
+
+        const fetchUser = reaction.message.guild.members.cache.get(user.id);
+        const nickname = fetchUser.nickname;
+        const embed = new MessageEmbed()
+            .setColor(user.hexAccentColor)
+            .setAuthor({ name: user.username, iconURL: user.displayAvatarURL(), url: `https://discordapp.com/users/${user.id}/` })
+            .setDescription(':information_source: A message has been quoted by you !')
+            .setThumbnail('https://i.imgur.com/MtxXPqa.png')
+            .addField(`:bust_in_silhouette: user`, `${reaction.message.author.username}`, false)
+            .addField(`:speech_left: message`, `${reaction.message.content}`, false)
+            .setImage(reaction.message.author.displayAvatarURL())
+            .setFooter({ text: new Date().toLocaleString(), iconURL: user.displayAvatarURL() });
+        await reaction.message.reply({ embeds: [embed] });
     }
 
     // Now the message has been cached and is fully available
