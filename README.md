@@ -10,6 +10,7 @@ Here is a table of slash commands available :
 |**Name**|**Description**|
 |--|--|
 |ping|makes the bot answer to it|
+|identify|use `firstname` and `lastname` to give yours, they will be stocked into a JSON and will be used for user information|
 |info|use `server` to see info from the server where the bot is<br>use `user` to see info for the choosen user|
 |role|use `create` to create a new role (only member with Administrator role can use it)<br>use `delete` to delete existing role (only member with Administrator role can use it)<br>use `view` to view all permissions of a role, an input is required for its name<br>use `list` to list all roles in the server except `@everyone`|
 |setrole|use `set` to set a role for user (only member with Administrator role can use it)<br>use `remove` to remove a role from user (only member with Administrator role can use it)|
