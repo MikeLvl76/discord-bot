@@ -34,7 +34,7 @@ module.exports = {
         const nickname = fetchUser.nickname;
         const reason = interaction.options.getString('reason');
         const choice = interaction.options.getString('choice');
-        const reader = fs.readFileSync('./commands/warnings.json');
+        const reader = fs.readFileSync('../resources/warnings.json');
         const data = JSON.parse(reader);
         let index = 0;
 
@@ -67,7 +67,7 @@ module.exports = {
                         }
                     }
                 }
-                fs.writeFile('./commands/warnings.json', JSON.stringify(data, null, 4), err => {
+                fs.writeFile('../resources/warnings.json', JSON.stringify(data, null, 4), err => {
                     if (err) throw err;
                     console.log(`${user.username} have been warned by ${interaction.user.username}`);
                 });

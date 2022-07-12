@@ -19,7 +19,7 @@ module.exports = {
         const lastname = interaction.options.getString('lastname');
         const fetchUser = interaction.guild.members.cache.get(interaction.user.id);
         const nickname = fetchUser.nickname;
-        const reader = fs.readFileSync('./commands/identification.json');
+        const reader = fs.readFileSync('../resources/identification.json');
         const data = JSON.parse(reader);
 
         if (Object.keys(data).length === 0) {
@@ -46,7 +46,7 @@ module.exports = {
                 }
             }
         }
-        fs.writeFile('./commands/identification.json', JSON.stringify(data, null, 4), err => {
+        fs.writeFile('../resources/identification.json', JSON.stringify(data, null, 4), err => {
             if (err) throw err;
             console.log(`${interaction.user.username} has updated his personnal informations`);
         });

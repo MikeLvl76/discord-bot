@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { CommandInteraction, MessageEmbed } = require('discord.js');
-const { AUTHORIZATION } = require('./aut.json');
+const { AUTHORIZATION } = require('../resources/aut.json');
 
 let array = [];
 for (let i = 0; i < Object.keys(AUTHORIZATION).length; i++) {

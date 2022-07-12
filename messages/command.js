@@ -1,4 +1,3 @@
-const puppeteer = require('puppeteer');
 const translate = require('@vitalets/google-translate-api');
 const weather = require('weather-js');
 const { MessageEmbed } = require('discord.js');

@@ -6,7 +6,7 @@ const client = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 
-const { token, answers, channelId, todo, quote } = require('./config.json');
+const { token, answers, channelId, todo, quote } = require('./resources/config.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
 const special_commands = require('./messages/command');
@@ -63,7 +63,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (reaction.emoji.name === quote) {
 
-        const reader = fs.readFileSync('./quote.json');
+        const reader = fs.readFileSync('./resources/quote.json');
         const data = JSON.parse(reader);
         const name = user.username;
         const content = reaction.message.content;
@@ -85,13 +85,11 @@ client.on('messageReactionAdd', async (reaction, user) => {
                 }
             }
         }
-        fs.writeFile('./quote.json', JSON.stringify(data, null, 4), err => {
+        fs.writeFile('./resources/quote.json', JSON.stringify(data, null, 4), err => {
             if (err) throw err;
             console.log(`${name} has quoted ${reaction.message.author.username}'s message !`);
         });
 
-        const fetchUser = reaction.message.guild.members.cache.get(user.id);
-        const nickname = fetchUser.nickname;
         const embed = new MessageEmbed()
             .setColor(user.hexAccentColor)
             .setAuthor({ name: user.username, iconURL: user.displayAvatarURL(), url: `https://discordapp.com/users/${user.id}/` })

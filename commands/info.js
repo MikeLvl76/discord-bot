@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { CommandInteraction, MessageEmbed } = require('discord.js');
-const { list } = require('./warnings.json');
-const data = require('./identification.json');
+const { list } = require('../resources/warnings.json');
+const data = require('../resources/identification.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
