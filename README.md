@@ -15,6 +15,7 @@ Here is a table of slash commands available :
 |setrole|use `set` to set a role for user (only member with Administrator role can use it)<br>use `remove` to remove a role from user (only member with Administrator role can use it)|
 |permision|use `add` to add permission(s) to a role, the role is given by an input and the permission(s) by choice list<br>use `remove` to remove permission(s) to a role, the role is given by an input and the permission(s) by choice list|
 |warn|use `user` and `reason` to warn an user, the warning (count and reason) and the user's name will be saved in JSON file, for the time the outcome is not decided which results as an infinite warning as long as possible. You can add or view warn(s).|
+|channel|use `add` then `name` and `permission` to create a channel with one permission among a list.</br>use `remove` then `name` to remove an existing channel|
 
 It's possible to "create" special commands by user sending message with a special character followed by command name.</br>
 Here is a table of special commands using character `$` :
@@ -30,6 +31,7 @@ And below a table with special interaction/behaviour of the bot :
 |--|--|
 |"quoi"|the bot will answer with "feur" (french joke : quoi and feur together sounds like "coiffeur")|
 |"oui"|the bot will answer with "stiti" (also french joke)|
-|&#x274C;|Each minute the bot will post a message|
-|&#x274C;|Once a day the bot will post a message|
-|Mentionning bot|The bot will send a description of all commands in DM|
+|&#x274C;|each minute the bot will post a message|
+|&#x274C;|Each day the bot will post a message at specific hour|
+|Mentionning bot|the bot will send a description of all commands in DM|
+|Reacting to a message with particular emoji|the bot will save the message in JSON and reply to you|
