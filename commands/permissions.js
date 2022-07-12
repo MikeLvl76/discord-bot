@@ -62,10 +62,7 @@ module.exports = {
                 break;
 
             case 'remove':
-                for (let permission of interaction.values) {
-                    role.permissions.remove(permission);
-                    console.log(`Permissions removed for role ${role.name}`);
-                }
+                role.permissions.remove(choice);
                 const embed2 = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle(`:x: Permission removed for role ${role.name}`)
