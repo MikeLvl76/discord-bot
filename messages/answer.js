@@ -19,6 +19,7 @@ async function answerBack(message, data, client){
                         { name: ':busts_in_silhouette: /role', value: 'Create or delete a role', inline: true},
                         { name: ':bust_in_silhouette: /setrole', value: 'Manage user\'s role', inline: true},
                         { name: ':scroll: /quotelist', value: 'List user\'s quotes', inline: true},
+                        { name: ':memo: /todo', value: 'Manage todo list', inline: true},
                         { name: ':warning: /warn', value: 'Warn user', inline: true},
                     ])
                     .addFields([

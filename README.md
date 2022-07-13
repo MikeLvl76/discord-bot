@@ -15,9 +15,10 @@ Here is a table of slash commands available :
 |role|use `create` to create a new role (only member with Administrator role can use it)<br>use `delete` to delete existing role (only member with Administrator role can use it)<br>use `view` to view all permissions of a role, an input is required for its name<br>use `list` to list all roles in the server except `@everyone`|
 |setrole|use `set` to set a role for user (only member with Administrator role can use it)<br>use `remove` to remove a role from user (only member with Administrator role can use it)|
 |permision|use `add` to add permission(s) to a role, the role is given by an input and the permission(s) by choice list<br>use `remove` to remove permission(s) to a role, the role is given by an input and the permission(s) by choice list|
-|warn|use `user` and `reason` to warn an user, the warning (count and reason) and the user's name will be saved in JSON file, for the time the outcome is not decided which results as an infinite warning as long as possible. You can add or view warning(s).|
+|warn|use `user` and `reason` to warn an user, the warning (count and reason) and the user's name will be saved in JSON file, for the time the outcome is not decided which results as an infinite warning as long as possible</br>you can add or view warning(s)|
 |channel|use `add` then `name` and `permission` to create a channel with one permission among a list.</br>use `remove` then `name` to remove an existing channel|
 |quotelist|use `user` to list all his quotes|
+|todo|use `add` then `entry` to add a new item in a list (stocked in JSON file)</br>use `remove` then `index_deletion` to remove an item from the list</br>use `edit` then `index` and `new` to change an item of the list</br>use `list` to see all items|
 
 It's possible to "create" special commands by user sending message with a special character followed by command name.</br>
 Here is a table of special commands using character `$` :
