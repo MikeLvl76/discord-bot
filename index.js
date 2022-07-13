@@ -8,6 +8,7 @@ const client = new Client({
 
 const { token, channelId } = require('./resources/config.json');
 const { answers, quote } = require('./resources/fun.json');
+const { list } = require('./resources/todo.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
 const special_commands = require('./messages/command');
@@ -26,11 +27,10 @@ client.once('ready', () => {
     const current = client.channels.fetch(channelId[0]);
     current.then(channel => channel.send(`It's ${new Date().toLocaleString()} and the BOAT is here.`))
     console.log("The bot has logged in !");
-    /*const check = 1000 * 300; // in ms
+    const check = 1000 * 60 * 30; // in ms
     setInterval(() => {
-        current.then(channel => channel.send(todo[Math.floor(Math.random() * todo.length)]));
-        console.log(`[${client.user.username}] at [${new Date().toLocaleString()}] send a message`);
-    }, check);*/
+        current.then(channel => channel.send(list[Math.floor(Math.random() * list.length)]));
+    }, check);
     const scheduledMessage = new cron.CronJob('00 00 21 * * *', () => {
         current.send('Resetting...')
             .then(msg => client.destroy())

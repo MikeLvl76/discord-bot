@@ -34,7 +34,7 @@ And below a table with special interaction/behaviour of the bot :
 |--|--|
 |"quoi"|the bot will answer with "feur" (french joke : quoi and feur together sounds like "coiffeur")|
 |"oui"|the bot will answer with "stiti" (also french joke)|
-|&#x274C;|each minute the bot will post a message|
-|&#x274C;|Each day the bot will post a message at specific hour|
+|&#x274C;|each 30 minutes the bot will post a message|
+|&#x274C;|each day the bot will post a message at specific hour|
 |Mentionning bot|the bot will send a description of all commands in DM|
 |Reacting to a message with particular emoji|the bot will save the message in JSON and reply to you|
