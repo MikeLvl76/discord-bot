@@ -38,3 +38,97 @@ And below a table with special interaction/behaviour of the bot :
 |&#x274C;|each day the bot will post a message at specific hour|
 |Mentionning bot|the bot will send a description of all commands in DM|
 |Reacting to a message with particular emoji|the bot will save the message in JSON and reply to you|
+
+# Templates 
+
+In order to save data and use it again, a [JSON](https://en.wikipedia.org/wiki/JSON) file is required. The json format is not the only way to store data but it's really easy to manipulate with JavaScript. To all created features, seven json files were been used, each one is listed below as template. Make sure to indicate good path if you use one. You can modify them as you wish.
+
+## **aut.json template**
+
+```json
+{
+    "AUTHORIZATION" : {
+        "put your keys here": "and each corresponding values"
+    }
+}
+```
+
+## **config.json template**
+
+```json
+{
+    "clientId": "your client id here",
+    "guildId": "your guild id here",
+    "channelId": [
+        "your channels id here"
+    ],
+    "token": "your secret token here, make sure to keep it secret and do NOT share it with unknown people"
+}
+```
+
+## **fun.json template**
+
+```json
+{
+    "answers": {
+        "quoi": [
+            "put answers here"
+        ],
+        "oui": [
+            "same as above"
+        ]
+    },
+    "quote": "put the emoji name used for quoting message"
+}
+```
+
+## **identification.json template**
+
+```json
+{
+    "user" : [
+        "firstname",
+        "lastname"
+    ]
+}
+```
+
+## **quote.json template**
+
+```json
+{
+    "list": [
+        {
+            "user's message" : {
+                "user who quoted" : [
+                    "your quoted messages"
+                ]
+            }
+        }
+    ]
+}
+```
+
+## **todo.json template**
+
+```json
+{
+    "list": [
+        "items here"
+    ]
+}
+```
+
+## **warnings.json template**
+
+```json
+{
+    "list": [
+        {
+            "user" : {
+                "warning number" : "warning"
+            }
+        }
+    ]
+}
+```
