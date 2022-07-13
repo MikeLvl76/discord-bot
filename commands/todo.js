@@ -48,7 +48,6 @@ module.exports = {
                     .setColor(interaction.user.hexAccentColor)
                     .setTitle('New entry in todo list !')
                     .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
-                    .setDescription('New entry in todo list !')
                     .setThumbnail('https://i.imgur.com/MtxXPqa.png')
                     .addField(`:memo: entry`, entry, true)
                     .setFooter({ text: new Date().toLocaleString()});
@@ -97,15 +96,15 @@ module.exports = {
                 break;
 
             case 'list':
-                const items = data['list'];
-                items.map(v => items.indexOf(v).toString() + v);
+                const items = data['list'].map(v => {
+                    return `${(data['list'].indexOf(v) + 1).toString()} - ${v}`;
+                });
                 const embed4 = new MessageEmbed()
                     .setColor(interaction.user.hexAccentColor)
                     .setTitle('Display todo list !')
                     .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL(), url: `https://discordapp.com/users/${interaction.user.id}/` })
-                    .setDescription('Display todo list !')
                     .setThumbnail('https://i.imgur.com/MtxXPqa.png')
-                    .addField(`:memo: deletion`, items.map(i => `${i}`).join('\n') || 'No items', false)
+                    .addField(`:memo: items`, items.map(i => `${i}`).join('\n') || 'No items', false)
                     .setFooter({ text: new Date().toLocaleString()});
                 await interaction.reply({ embeds: [embed4] });
                 console.log(`${interaction.user.username} has listed item(s) from todo list !`);
