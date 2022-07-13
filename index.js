@@ -6,7 +6,8 @@ const client = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 
-const { token, answers, channelId, todo, quote } = require('./resources/config.json');
+const { token, channelId } = require('./resources/config.json');
+const { answers, quote } = require('./resources/fun.json');
 const handleCommand = require('./handles/command');
 const answerBack = require('./messages/answer');
 const special_commands = require('./messages/command');
@@ -25,11 +26,11 @@ client.once('ready', () => {
     const current = client.channels.fetch(channelId[0]);
     current.then(channel => channel.send(`It's ${new Date().toLocaleString()} and the BOAT is here.`))
     console.log("The bot has logged in !");
-    const check = 1000 * 300; // in ms
+    /*const check = 1000 * 300; // in ms
     setInterval(() => {
         current.then(channel => channel.send(todo[Math.floor(Math.random() * todo.length)]));
         console.log(`[${client.user.username}] at [${new Date().toLocaleString()}] send a message`);
-    }, check);
+    }, check);*/
     const scheduledMessage = new cron.CronJob('00 00 21 * * *', () => {
         current.send('Resetting...')
             .then(msg => client.destroy())
