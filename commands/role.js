@@ -37,7 +37,7 @@ module.exports = {
             case 'create':
                 if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
                     await interaction.reply("You don't have the permission to do this action !");
-                    throw new Error("permission denied");
+                    return;
                 }
                 if (found === undefined) {
                     await interaction.guild.roles.create({
@@ -58,7 +58,7 @@ module.exports = {
             case 'delete':
                 if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
                     await interaction.reply("You don't have the permission to do this action !");
-                    throw new Error("permission denied");
+                    return;
                 }
                 if (found === undefined) {
                     await interaction.reply(`Role "${role}" already deleted or never been created !`);

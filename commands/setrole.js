@@ -28,16 +28,16 @@ module.exports = {
         const found = interaction.guild.roles.cache.find(r => r.name === role);
         if(!interaction.member.roles.cache.some(r => r.name === 'Master')){
             await interaction.reply("You don't have the permission to do this action !");
-            throw new Error("permission denied");
+            return;
         }
         if(found === undefined){
             await interaction.reply(`No role named ${role}`);
-            throw new Error("role must be defined");
+            return;
         }
         const user = interaction.options.getUser('target');
         if(!user){
             await interaction.reply('Sorry, unavailable user');
-            throw new Error("user must be defined");
+            return;
         }
         const target = interaction.guild.members.cache.get(user.id);
         switch (cmd) {

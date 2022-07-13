@@ -47,7 +47,10 @@ module.exports = {
             }
         }
         fs.writeFile('../resources/identification.json', JSON.stringify(data, null, 4), err => {
-            if (err) throw err;
+            if (err) { 
+                console.log(err);
+                return;
+            }
             console.log(`${interaction.user.username} has updated his personnal informations`);
         });
     }

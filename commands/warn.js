@@ -27,7 +27,7 @@ module.exports = {
 
         if (!interaction.member.roles.cache.some(r => r.name === 'Master')) {
             await interaction.reply("You don't have the permission to do this action !");
-            throw new Error("permission denied");
+            return;
         }
         const user = interaction.options.getUser('target');
         const fetchUser = interaction.guild.members.cache.get(user.id);
@@ -40,7 +40,7 @@ module.exports = {
 
         if (!user) {
             await interaction.reply('Sorry, unavailable user');
-            throw new Error("error on user");
+            return;
         }
         switch (choice) {
             case 'add':
@@ -68,7 +68,10 @@ module.exports = {
                     }
                 }
                 fs.writeFile('../resources/warnings.json', JSON.stringify(data, null, 4), err => {
-                    if (err) throw err;
+                    if (err) { 
+                        console.log(err);
+                        return;
+                    }
                     console.log(`${user.username} have been warned by ${interaction.user.username}`);
                 });
                 let text = '';

@@ -26,6 +26,10 @@ function special_commands(message) {
             }
             weather.find({ search: parts[1], degreeType: 'C' }, function (err, json) {
                 if (err) console.log(err);
+                if(Object.keys(json).length === 0){
+                    message.reply(`Cannot find weather in ${parts[1]}`);
+                    return;
+                }
                 let current = undefined;
                 for (let elt of json) {
                     if (elt['current'] !== undefined) current = elt['current']
@@ -54,7 +58,7 @@ function special_commands(message) {
             if (parts.length > 4) {
                 parts[3] = parts.slice(3, parts.length).join(" ");
             }
-            translate(parts[3], { from: parts[1], to: parts[2] }).then(res => {
+            translate(parts[3], { from: parts[1], to: `${parts[2]}`}).then(res => {
                 const embed = new MessageEmbed()
                     .setColor(`#0099ff`)
                     .setTitle(`Translation`)

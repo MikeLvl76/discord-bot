@@ -13,16 +13,19 @@ async function answerBack(message, data, client){
                     .setThumbnail('https://cdn-icons-png.flaticon.com/512/138/138849.png')
                     .addFields([
                         { name: ':information_source: /info', value: 'Get info about user or server', inline: true},
+                        { name: ':bust_in_silhouette: /identify', value: 'Put your firstname and lastname', inline: true},
                         { name: ':no_entry_sign: /permissions', value: 'Add permissions to role', inline: true},
                         { name: ':speaking_head: /ping', value: 'Call me', inline: true},
                         { name: ':busts_in_silhouette: /role', value: 'Create or delete a role', inline: true},
                         { name: ':bust_in_silhouette: /setrole', value: 'Manage user\'s role', inline: true},
+                        { name: ':scroll: /quotelist', value: 'List user\'s quotes', inline: true},
                         { name: ':warning: /warn', value: 'Warn user', inline: true},
                     ])
                     .addFields([
                         { name: ':link: $wiki', value: 'Search term in Wikipedia', inline: true},
                         { name: ':white_sun_rain_cloud: $weather', value: 'Get the weather of your city', inline: true},
                         { name: ':speech_left: $translate', value: 'Translate message from language to another', inline: true},
+                        { name: ':clipboard: $commandlist', value: 'List all commands with prefix "$"', inline: true},
                     ])
                     .setFooter({ text: new Date().toLocaleString()});
             message.react('💯');

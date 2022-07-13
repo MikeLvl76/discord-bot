@@ -19,7 +19,7 @@ module.exports = {
 
         if (!user) {
             await interaction.reply('Sorry, unavailable user');
-            throw new Error("error on user");
+            return;
         }
 
         let quotes = []
