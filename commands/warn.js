@@ -45,18 +45,16 @@ module.exports = {
         switch (choice) {
             case 'add':
                 if (data['list'].length === 0) {
-                    const collect = {};
-                    collect[user.username] = {
-                        '1': reason
-                    };
                     index = 1;
+                    const collect = {};
+                    collect[user.username] = {};
+                    collect[user.username][index] = reason;
                     data['list'].push(collect);
                 } else {
                     for (let elt of data['list']) {
                         if (elt[user.username] === undefined) {
-                            elt[user.username] = {
-                                '1': reason
-                            };
+                            elt[user.username] = {};
+                            elt[user.username][index] = reason;
                             break;
                         } else {
                             const keys = Object.keys(elt[user.username]);
